@@ -1,7 +1,10 @@
 package com.example.demouser.splanner;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -9,7 +12,45 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //blah blah blah
-        // I have changed something
+
+        Button searchBtn = findViewById(R.id.searchButton);
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSearch();
+            }
+        });
+
+        Button myListBtn = findViewById(R.id.listButton);
+        myListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onMyLists();
+            }
+        });
+
+        Button myPlansBtn = findViewById(R.id.planButton);
+        myPlansBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onMyPlans();
+            }
+        });
+
+    }
+
+    private void onMyPlans() {
+        Intent intent = new Intent(this, PlansActivity.class);
+        startActivity(intent);
+    }
+
+    private void onMyLists() {
+        Intent intent = new Intent(this, ListActivity.class);
+        startActivity(intent);
+    }
+
+    protected void onSearch() {
+        Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
     }
 }
