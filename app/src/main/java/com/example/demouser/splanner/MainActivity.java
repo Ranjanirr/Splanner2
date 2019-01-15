@@ -10,8 +10,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Course c1 = new Course("1", "Advanced Programming","TT", "1");
         Course temp1 = new Course("COMSC-109-01", "iDesign Studio",
                 "Monday, Wednesday", "02:55PM - 04:10PM");
-    }
-}
+        }
+        }

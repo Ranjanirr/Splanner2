@@ -8,7 +8,7 @@ public class Course {
     private int startTime;
     private int endTime;
 
-    public Course (String courseNumber, String courseTitle, String meetingDays, String meetingTime){
+    public Course(String courseNumber, String courseTitle, String meetingDays, String meetingTime) {
         this.courseNumber = courseNumber;
         this.courseTitle = courseTitle;
         this.meetingDays = meetingDays;
@@ -16,44 +16,44 @@ public class Course {
 
         String[] meetTimes = meetingTime.split(" - ");
 
-        String start = meetTimes[0].substring(0, meetTimes[0].length()-2).replaceAll(":", "");
-        String dayTime = meetTimes[0].substring(meetTimes[0].length()-2);
+        String start = meetTimes[0].substring(0, meetTimes[0].length() - 2).replaceAll(":", "");
+        String dayTime = meetTimes[0].substring(meetTimes[0].length() - 2);
 
         startTime = convertTime(start, dayTime);
 
-        String end = meetTimes[1].substring(0, meetTimes[1].length()-2).replaceAll(":", "");
-        String dayTime2 = meetTimes[1].substring(meetTimes[1].length()-2);
+        String end = meetTimes[1].substring(0, meetTimes[1].length() - 2).replaceAll(":", "");
+        String dayTime2 = meetTimes[1].substring(meetTimes[1].length() - 2);
 
         endTime = convertTime(end, dayTime2);
 
     }
 
-    public String getCourseTitle(){
+    public String getCourseTitle() {
         return courseTitle;
     }
 
-    public String getCourseNumber(){
+    public String getCourseNumber() {
         return courseNumber;
     }
 
-    public String getMeetingDays(){
+    public String getMeetingDays() {
         return meetingDays;
     }
 
-    public String getTimeString(){
+    public String getTimeString() {
         return meetingTime;
     }
 
-    public Integer getStartTime(){
+    public Integer getStartTime() {
         return startTime;
     }
 
-    public Integer getEndTime(){
+    public Integer getEndTime() {
         return endTime;
     }
 
     // convert time
-    private Integer convertTime (String tempTime, String day){
+    private Integer convertTime(String tempTime, String day) {
         if (day.equals("AM"))
             return Integer.parseInt(tempTime);
         else if (day.equals("PM"))
