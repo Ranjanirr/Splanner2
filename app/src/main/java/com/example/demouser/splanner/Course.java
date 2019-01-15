@@ -52,6 +52,7 @@ public class Course {
         return endTime;
     }
 
+    // convert time
     private Integer convertTime (String tempTime, String day){
         if (day.equals("AM"))
             return Integer.parseInt(tempTime);
