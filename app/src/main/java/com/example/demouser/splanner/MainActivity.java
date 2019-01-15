@@ -11,5 +11,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //blah blah blah blah
         //new comment
+        Course c1 = new Course("1", "Advanced Programming","TT", "1");
+
+
     }
 }
