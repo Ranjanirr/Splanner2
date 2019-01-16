@@ -31,7 +31,7 @@ public class SearchActivity extends AppCompatActivity {
 
     // contains CS classes from Spring 2019 data
     private HashMap<String, Course> courseList = new HashMap<>();
-
+    public List<Course> courseDisplayList;
     private ItemsListAdapter myItemsListAdapter;
     private ListView listView;
     private Button addButton;
@@ -48,22 +48,29 @@ public class SearchActivity extends AppCompatActivity {
         listView = (ListView)findViewById(R.id.listview);
         addButton = (Button)findViewById(R.id.addCourse);
 
+        initCourseList();
+        myItemsListAdapter = new ItemsListAdapter(this, courseDisplayList);
+        listView.setAdapter(myItemsListAdapter);
 
 
         simpleSearchView = (SearchView) findViewById(R.id.searchView);
         simpleSearchView.setQueryHint("Search for classes");
-        query = simpleSearchView.getQuery();
 
-//        Log.i("userinput", query.toString());
+        simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.i("userinput", query);
+                if(myItemsListAdapter.searchCourse(query) == null){
+                    Toast.makeText(SearchActivity.this, "No result", Toast.LENGTH_LONG).show();
+                }
+                return true;
+            }
 
-
-
-
-
-
-        initCourseList();
-        myItemsListAdapter = new ItemsListAdapter(this, CourseList.instance.getCourses());
-        listView.setAdapter(myItemsListAdapter);
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
@@ -79,9 +86,9 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String str = "Check items:\n";
 
-                for (int i=0; i<CourseList.instance.getCourses().size(); i++){
-                    if (CourseList.instance.getCourses().get(i).isChecked()){
-                        str += CourseList.instance.getCourses().get(i).getCourseTitle() + "\n";
+                for (int i=0; i<courseDisplayList.size(); i++){
+                    if (courseDisplayList.get(i).isChecked()){
+                        str += courseDisplayList.get(i).getCourseTitle() + "\n";
                     }
                 }
 
@@ -102,9 +109,11 @@ public class SearchActivity extends AppCompatActivity {
         private Context context;
         private List<Course> list;
 
+        private List<Course> database;
         ItemsListAdapter(Context c, List<Course> l) {
             context = c;
-            list = l;
+            database = l;
+            list = database;
         }
 
         @Override
@@ -166,6 +175,26 @@ public class SearchActivity extends AppCompatActivity {
 
             return rowView;
         }
+
+        public void updateList(List<Course> l){
+            list = l;
+        }
+
+        public List<Course> searchCourse(String keyword){
+            int count = 0;
+            List<Course> result = new LinkedList<>();
+            while(count < database.size()){
+                if(database.get(count).getCourseTitle().contains(keyword)){
+                    result.add(result.get(count));
+                }
+            }
+            list = result;
+            return result;
+        }
+
+        public void reset(){
+            list = database;
+        }
     }
 
 
@@ -176,7 +205,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void initCourseList(){
-
+        courseDisplayList = new LinkedList<>();
         // parsing course information and store to a HashMap and LinkedList
         AssetManager assetManager = getAssets();
         try {
@@ -193,7 +222,7 @@ public class SearchActivity extends AppCompatActivity {
                 newCourse.setCredit(courseInfo[4]);
 
                 courseList.put(newCourse.getCourseTitle(), newCourse);
-                CourseList.instance.addCourse(newCourse);
+                courseDisplayList.add(newCourse);
             }
 
         } catch (IOException e) {
