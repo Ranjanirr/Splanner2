@@ -38,9 +38,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        Course c1 = new Course("1", "Advanced Programming","TT", "1");
-//        Course temp1 = new Course("COMSC-109-01", "iDesign Studio",
-//                "Monday, Wednesday", "02:55PM - 04:10PM");
 
     }
 

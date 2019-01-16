@@ -7,7 +7,7 @@
     tools:context=".SearchActivity">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/addButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -78,7 +78,7 @@
         android:id="@+id/checkButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/button"
+        android:layout_alignBottom="@+id/addButton"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="53dp"
         android:layout_marginBottom="0dp"
