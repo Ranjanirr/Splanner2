@@ -1,43 +1,93 @@
 package com.example.demouser.splanner;
 
+import android.content.Intent;
+import android.content.res.AssetManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
-import java.util.LinkedList;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "CourseSorter";
+
+//    // contains CS classes from Spring 2019 data
+//    private HashMap<String, Course> courseList = new HashMap<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Course c1 = new Course("1", "Advanced Programming", "TT", "02:55PM - 04:10PM");
-        Course c2 = new Course("COMSC-109-01", "iDesign Studio",
-                "Monday, Wednesday", "02:55PM - 04:10PM");
-        Course c3 = new Course("COMSC-109-01", "Sins",
-                "Monday, Wednesday", "02:55PM - 04:10PM");
-        Course c4 = new Course("COMSC-109-01", "Optimist",
-                "Monday, Wednesday", "02:55PM - 04:10PM");
-        Course c5 = new Course("COMSC-109-01", "Close",
-                "Monday, Wednesday", "02:55PM - 04:10PM");
 
-        Course[] courses = new Course[]{c1, c2, c3, c4, c5};
-        int x = 0;
-        LinkedList<Course[]> result = new LinkedList<Course[]>();
-        for (int i = 0; i < courses.length - 2; i++) {
-            for (int j = i + 1; j < courses.length - 1; j++) {
-                for (int k = j + 1; k < courses.length; k++) {
-                    Course[] plan = new Course[3];
-                    plan[0] = courses[i];
-                    plan[1] = courses[j];
-                    plan[2] = courses[k];
-                    result.add(x, plan);
-                    x++;
-                }
+
+//        AssetManager assetManager = getAssets();
+//        try {
+//            InputStream inputStream = assetManager.open("courses.txt");
+//            BufferedReader in  = new BufferedReader(new InputStreamReader(inputStream));
+//            String line;
+//            while((line = in.readLine()) != null){
+//                String[] courseInfo = line.split("\\|");
+//                Course newCourse = new Course();
+//                newCourse.setCourseNumber(courseInfo[0]);
+//                newCourse.setCourseTitle(courseInfo[1]);
+//                newCourse.setMeetingDays(courseInfo[2]);
+//                newCourse.setCourseTime(courseInfo[3]);
+//                newCourse.setCredit(courseInfo[4]);
+//
+//                courseList.put(newCourse.getCourseTitle(), newCourse);
+//            }
+//
+//        } catch (IOException e) {
+//            Toast toast = Toast.makeText(this, "Could not load dictionary", Toast.LENGTH_LONG);
+//            toast.show();
+//        }
+
+        Button searchBtn = findViewById(R.id.searchButton);
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSearch();
             }
-        }
+        });
 
+        Button myListBtn = findViewById(R.id.listButton);
+        myListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onMyLists();
+            }
+        });
+
+        Button myPlansBtn = findViewById(R.id.planButton);
+        myPlansBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onMyPlans();
+            }
+        });
+
+        Course temp1 = new Course("COMSC-109-01", "iDesign Studio", "Monday, Wednesday", "02:55PM - 04:10PM", "4");
     }
 
+    private void onMyPlans() {
+        Intent intent = new Intent(this, PlansActivity.class);
+        startActivity(intent);
+    }
+
+    private void onMyLists() {
+        Intent intent = new Intent(this, ListActivity.class);
+        startActivity(intent);
+    }
+
+    protected void onSearch() {
+        Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
+    }
 }
+
