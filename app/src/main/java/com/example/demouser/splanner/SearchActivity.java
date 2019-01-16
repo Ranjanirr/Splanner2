@@ -193,8 +193,8 @@ public class SearchActivity extends AppCompatActivity {
             while(count < database.size()){
                 String title = database.get(count).getCourseTitle().toLowerCase();
                 String key = keyword.toLowerCase();
-
-                if(title.contains(key)){
+                String number = database.get(count).getCourseNumber().toLowerCase();
+                if(title.contains(key) || number.contains(key)){
                     result.add(database.get(count));
                 }
                 count++;
