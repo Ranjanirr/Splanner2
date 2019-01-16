@@ -110,4 +110,12 @@ public class Course {
     public boolean isChecked(){
         return checked;
     }
+
+    // return a string which contains the whole information about this class
+    public String toString() {
+        String res = "";
+        res += courseNumber + " " + courseTitle + "\n"
+                + meetingDays + " " + meetingTime;
+        return res;
+    }
 }

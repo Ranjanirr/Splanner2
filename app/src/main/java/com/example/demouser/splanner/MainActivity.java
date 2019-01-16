@@ -71,8 +71,6 @@ public class MainActivity extends AppCompatActivity {
                 onMyPlans();
             }
         });
-
-        Course temp1 = new Course("COMSC-109-01", "iDesign Studio", "Monday, Wednesday", "02:55PM - 04:10PM", "4");
     }
 
     private void onMyPlans() {
