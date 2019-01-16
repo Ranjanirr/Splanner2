@@ -86,8 +86,18 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="21dp"
-        android:layout_marginBottom="42dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="46dp"
         android:text="Generate Class Plans" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="114dp"
+        android:layout_marginBottom="42dp"
+        android:text="Button" />
 
 </RelativeLayout>

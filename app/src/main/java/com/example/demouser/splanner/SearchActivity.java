@@ -14,8 +14,8 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,33 +31,42 @@ public class SearchActivity extends AppCompatActivity {
 
     // contains CS classes from Spring 2019 data
     private HashMap<String, Course> courseList = new HashMap<>();
-    public static List<Course> courseDisplayList;
+    public List<Course> courseDisplayList;
     private ItemsListAdapter myItemsListAdapter;
     private ListView listView;
-    private Button btnLookup;
+    private Button addButton;
+
+
+    private SearchView simpleSearchView; // inititate a search view
+    private CharSequence query; // get the query string currently in the text field
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-//        Button checkBtn = findViewById(R.id.checkButton);
         listView = (ListView)findViewById(R.id.listview);
-        btnLookup = (Button)findViewById(R.id.lookup);
-//        checkBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onCheckMyLists();
-//            }
-//        });
+        addButton = (Button)findViewById(R.id.addCourse);
+
+
+
+        simpleSearchView = (SearchView) findViewById(R.id.searchView);
+        simpleSearchView.setQueryHint("Search for classes");
+        query = simpleSearchView.getQuery();
+
+//        Log.i("userinput", query.toString());
+
+
+
+
 
 
         initCourseList();
-
         myItemsListAdapter = new ItemsListAdapter(this, courseDisplayList);
         listView.setAdapter(myItemsListAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(SearchActivity.this,
@@ -65,14 +74,14 @@ public class SearchActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
             }});
 
-        btnLookup.setOnClickListener(new View.OnClickListener() {
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String str = "Check items:\n";
 
                 for (int i=0; i<courseDisplayList.size(); i++){
                     if (courseDisplayList.get(i).isChecked()){
-                        str += i + "\n";
+                        str += courseDisplayList.get(i).getCourseTitle() + "\n";
                     }
                 }
 
@@ -137,7 +146,8 @@ public class SearchActivity extends AppCompatActivity {
             viewHolder.checkBox.setChecked(list.get(position).isChecked());
 
             final String itemStr = list.get(position).getCourseTitle();
-            viewHolder.text.setText(itemStr);
+            final String courseNum = list.get(position).getCourseNumber();
+            viewHolder.text.setText(courseNum + "\n" + itemStr);
 
             viewHolder.checkBox.setTag(position);
 
@@ -183,7 +193,6 @@ public class SearchActivity extends AppCompatActivity {
                 newCourse.setCredit(courseInfo[4]);
 
                 courseList.put(newCourse.getCourseTitle(), newCourse);
-
                 courseDisplayList.add(newCourse);
             }
 
