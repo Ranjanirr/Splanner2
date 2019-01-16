@@ -14,8 +14,8 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,21 +34,29 @@ public class SearchActivity extends AppCompatActivity {
     public List<Course> courseDisplayList;
     private ItemsListAdapter myItemsListAdapter;
     private ListView listView;
-    private Button btnLookup;
+    private Button addButton;
+
+
+    private SearchView simpleSearchView; // inititate a search view
+    private CharSequence query; // get the query string currently in the text field
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-//        Button checkBtn = findViewById(R.id.checkButton);
         listView = (ListView)findViewById(R.id.listview);
-        btnLookup = (Button)findViewById(R.id.lookup);
-//        checkBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onCheckMyLists();
-//            }
-//        });
+        addButton = (Button)findViewById(R.id.addCourse);
+
+
+
+        simpleSearchView = (SearchView) findViewById(R.id.searchView);
+        simpleSearchView.setQueryHint("Search for classes");
+        query = simpleSearchView.getQuery();
+
+//        Log.i("userinput", query.toString());
+
+
 
 
 
@@ -66,7 +74,7 @@ public class SearchActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
             }});
 
-        btnLookup.setOnClickListener(new View.OnClickListener() {
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String str = "Check items:\n";
@@ -138,7 +146,8 @@ public class SearchActivity extends AppCompatActivity {
             viewHolder.checkBox.setChecked(list.get(position).isChecked());
 
             final String itemStr = list.get(position).getCourseTitle();
-            viewHolder.text.setText(itemStr);
+            final String courseNum = list.get(position).getCourseNumber();
+            viewHolder.text.setText(courseNum + "\n" + itemStr);
 
             viewHolder.checkBox.setTag(position);
 
