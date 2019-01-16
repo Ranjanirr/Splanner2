@@ -31,7 +31,7 @@ public class SearchActivity extends AppCompatActivity {
 
     // contains CS classes from Spring 2019 data
     private HashMap<String, Course> courseList = new HashMap<>();
-    public List<Course> courseDisplayList;
+
     private ItemsListAdapter myItemsListAdapter;
     private ListView listView;
     private Button addButton;
@@ -62,7 +62,7 @@ public class SearchActivity extends AppCompatActivity {
 
 
         initCourseList();
-        myItemsListAdapter = new ItemsListAdapter(this, courseDisplayList);
+        myItemsListAdapter = new ItemsListAdapter(this, CourseList.instance.getCourses());
         listView.setAdapter(myItemsListAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -79,9 +79,9 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String str = "Check items:\n";
 
-                for (int i=0; i<courseDisplayList.size(); i++){
-                    if (courseDisplayList.get(i).isChecked()){
-                        str += courseDisplayList.get(i).getCourseTitle() + "\n";
+                for (int i=0; i<CourseList.instance.getCourses().size(); i++){
+                    if (CourseList.instance.getCourses().get(i).isChecked()){
+                        str += CourseList.instance.getCourses().get(i).getCourseTitle() + "\n";
                     }
                 }
 
@@ -176,7 +176,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void initCourseList(){
-        courseDisplayList = new LinkedList<>();
+
         // parsing course information and store to a HashMap and LinkedList
         AssetManager assetManager = getAssets();
         try {
@@ -193,7 +193,7 @@ public class SearchActivity extends AppCompatActivity {
                 newCourse.setCredit(courseInfo[4]);
 
                 courseList.put(newCourse.getCourseTitle(), newCourse);
-                courseDisplayList.add(newCourse);
+                CourseList.instance.addCourse(newCourse);
             }
 
         } catch (IOException e) {
