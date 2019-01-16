@@ -48,22 +48,29 @@ public class SearchActivity extends AppCompatActivity {
         listView = (ListView)findViewById(R.id.listview);
         addButton = (Button)findViewById(R.id.addCourse);
 
+        initCourseList();
+        myItemsListAdapter = new ItemsListAdapter(this, courseDisplayList);
+        listView.setAdapter(myItemsListAdapter);
 
 
         simpleSearchView = (SearchView) findViewById(R.id.searchView);
         simpleSearchView.setQueryHint("Search for classes");
-        query = simpleSearchView.getQuery();
 
-//        Log.i("userinput", query.toString());
+        simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.i("userinput", query);
+                if(myItemsListAdapter.searchCourse(query) == null){
+                    Toast.makeText(SearchActivity.this, "No result", Toast.LENGTH_LONG).show();
+                }
+                return true;
+            }
 
-
-
-
-
-
-        initCourseList();
-        myItemsListAdapter = new ItemsListAdapter(this, courseDisplayList);
-        listView.setAdapter(myItemsListAdapter);
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
@@ -102,9 +109,11 @@ public class SearchActivity extends AppCompatActivity {
         private Context context;
         private List<Course> list;
 
+        private List<Course> database;
         ItemsListAdapter(Context c, List<Course> l) {
             context = c;
-            list = l;
+            database = l;
+            list = database;
         }
 
         @Override
@@ -165,6 +174,26 @@ public class SearchActivity extends AppCompatActivity {
             viewHolder.checkBox.setChecked(isChecked(position));
 
             return rowView;
+        }
+
+        public void updateList(List<Course> l){
+            list = l;
+        }
+
+        public List<Course> searchCourse(String keyword){
+            int count = 0;
+            List<Course> result = new LinkedList<>();
+            while(count < database.size()){
+                if(database.get(count).getCourseTitle().contains(keyword)){
+                    result.add(result.get(count));
+                }
+            }
+            list = result;
+            return result;
+        }
+
+        public void reset(){
+            list = database;
         }
     }
 
