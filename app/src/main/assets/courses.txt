@@ -1,0 +1,25 @@
+COMSC-109-01|iDesign Studio|Tuesday|01:30PM - 02:45PM|4
+COMSC-132-01|Engineering for Everyone|Thursday|01:30PM - 02:45PM|4
+COMSC-151AA-01|CS Prob Solv: Algorithmic Art|Monday, Wednesday|02:55PM - 04:10PM|4
+COMSC-151AAL-01|CS Prob Solv: Algorithmic Lab|Friday|01:30PM - 04:20PM|0
+COMSC-151AR-01|CS Prov Solv: Artificl Intel.|Tuesday, Thursday|08:30AM - 09:45AM|4
+COMSC-151ARL-01|CS Prov Solv: Artif Int Lab|Wednesday|01:30PM - 04:20PM|0
+COMSC-151ARL-02|CS Prov Solv: Artif Int Lab|Thursday|01:30PM - 04:20PM|0
+COMSC-151MD-01|CS Prob Solv: Medical Tech|Tuesday, Thursday|10:00AM - 11:15AM|4
+COMSC-151MDL-01|CS Prob Solv: Med Tech Lab|Monday|01:30PM - 04:20PM|0
+COMSC-151MDL-02|CS Prob Solv: Med Tech Lab|Tuesday|01:30PM - 04:20PM|0
+COMSC-205-01|Data Structures|Tuesday, Thursday|11:30AM - 12:45PM|4
+COMSC-205L-01|Data Structures Lab|Monday|01:30PM - 04:20PM|0
+COMSC-205L-02|Data Structures Lab|Tuesday|01:30PM - 04:20PM|0
+COMSC-205L-03|Data Structures Lab|Wednesday|01:30PM - 04:20PM|0
+COMSC-205L-04|Data Structures Lab|Thursday|01:30PM - 04:20PM|0
+COMSC-211-01|Advanced Data Structures|Monday, Wednesday|09:30AM - 10:45AM|4
+COMSC-211-02|Advanced Data Structures|Tuesday, Thursday|01:30PM - 02:45PM|4
+COMSC-215-01|Software Design|Monday, Wednesday|01:30PM - 02:45PM|4
+COMSC-221-01|Intro to Computing Systems|Tuesday, Thursday|02:55PM - 04:10PM|4
+COMSC-221L-01|Intro to Computing Syst Lab|Friday|08:30AM - 09:20AM|0
+COMSC-221L-02|Intro to Computing Syst Lab|Friday|09:30AM - 10:20AM|0
+COMSC-226-01|Engineering Robotic Systems|Tuesday|10:00AM - 11:15AM|4
+COMSC-312-01|Algorithms|Monday, Wednesday|11:00AM - 12:15PM|4
+COMSC-322-01|Operating Systems|Tuesday, Thursday|11:30AM - 12:45PM|4
+COMSC-335-01|Machine Learning|Tuesday, Thursday|10:00AM - 11:15AM|4
