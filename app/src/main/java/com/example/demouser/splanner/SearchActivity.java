@@ -73,7 +73,7 @@ public class SearchActivity extends AppCompatActivity {
 
                 for (int i=0; i<courseDisplayList.size(); i++){
                     if (courseDisplayList.get(i).isChecked()){
-                        str += i + "\n";
+                        str += courseDisplayList.get(i).getCourseTitle() + "\n";
                     }
                 }
 
