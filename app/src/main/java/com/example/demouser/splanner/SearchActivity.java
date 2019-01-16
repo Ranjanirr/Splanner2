@@ -31,10 +31,11 @@ public class SearchActivity extends AppCompatActivity {
 
     // contains CS classes from Spring 2019 data
     private HashMap<String, Course> courseList = new HashMap<>();
-    public List<Course> courseDisplayList;
+    public static List<Course> courseDisplayList;
     private ItemsListAdapter myItemsListAdapter;
     private ListView listView;
     private Button btnLookup;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,14 +52,12 @@ public class SearchActivity extends AppCompatActivity {
 //        });
 
 
-
-
         initCourseList();
+
         myItemsListAdapter = new ItemsListAdapter(this, courseDisplayList);
         listView.setAdapter(myItemsListAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(SearchActivity.this,
@@ -184,6 +183,7 @@ public class SearchActivity extends AppCompatActivity {
                 newCourse.setCredit(courseInfo[4]);
 
                 courseList.put(newCourse.getCourseTitle(), newCourse);
+
                 courseDisplayList.add(newCourse);
             }
 

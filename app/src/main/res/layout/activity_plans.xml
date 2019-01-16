@@ -6,70 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".PlansActivity">
 
-    <LinearLayout
-        android:id="@+id/plan4"
-        android:layout_width="162dp"
-        android:layout_height="151dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="206dp"
-        android:layout_marginTop="284dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:text="PlanD"
-            android:textAlignment="center" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/plan3"
-        android:layout_width="162dp"
-        android:layout_height="151dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="284dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:text="PlanC"
-            android:textAlignment="center" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/plan2"
-        android:layout_width="162dp"
-        android:layout_height="151dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="202dp"
-        android:layout_marginTop="79dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/planB"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/plan2"
-            android:layout_alignTop="@+id/plan2"
-            android:fontFamily="monospace"
-            android:text="PlanB"
-            android:textAlignment="center" />
-
-    </LinearLayout>
-
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -83,21 +21,58 @@
 
     <LinearLayout
         android:id="@+id/plan1"
-        android:layout_width="162dp"
-        android:layout_height="151dp"
+        android:layout_width="268dp"
+        android:layout_height="206dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="79dp"
+        android:layout_marginStart="62dp"
+        android:layout_marginTop="70dp"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/plan1Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
             android:text="PlanA"
             android:textAlignment="center" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/plan1List"
+            android:layout_width="268dp"
+            android:layout_height="206dp"
+            tools:itemCount="4"
+            tools:listitem="@layout/recycler_view_item_1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/plan2"
+        android:layout_width="268dp"
+        android:layout_height="206dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="62dp"
+        android:layout_marginTop="290dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/planB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/plan2"
+            android:layout_alignTop="@+id/plan2"
+            android:fontFamily="monospace"
+            android:text="PlanB"
+            android:textAlignment="center" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:scrollbars="vertical"
+            tools:itemCount="4"
+            tools:listitem="@layout/recycler_view_item" />
 
     </LinearLayout>
 

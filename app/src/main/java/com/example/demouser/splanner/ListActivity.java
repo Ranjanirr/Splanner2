@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.CheckBox;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListActivity extends AppCompatActivity {
 
@@ -15,5 +16,7 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
 
         CheckBox checkBox1 = findViewById(R.id.checkBox7);
+
+        List<Course> course =  SearchActivity.courseDisplayList;
     }
 }
