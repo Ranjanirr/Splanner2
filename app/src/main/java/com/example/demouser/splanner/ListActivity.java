@@ -29,29 +29,24 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        btnLookup = (Button)findViewById(R.id.button);
+
         final LinearLayout classLayout = (LinearLayout) findViewById(R.id.linny);
         final TextView classView = findViewById(R.id.textView7);
-        btnLookup.setOnClickListener(new View.OnClickListener() {
-            @Override
 
-            public void onClick(View view) {
+        String str = "Check items:\n";
 
-                String str = "Check items:\n";
+        for (int i = 0; i < CourseList.instance.getCourses().size(); i++) {
+            if (CourseList.instance.getCourses().get(i).isChecked()) {
 
-                for (int i = 0; i < CourseList.instance.getCourses().size(); i++) {
-                    if (CourseList.instance.getCourses().get(i).isChecked()) {
+                classView.setText( classView.getText() + CourseList.instance.getCourses().get(i).getCourseTitle() +"\n" );
 
-                        classView.setText(classView.getText() + CourseList.instance.getCourses().get(i).getCourseTitle() + "\n");
-
-                    }
-
-                    Toast.makeText(ListActivity.this, str, Toast.LENGTH_LONG).show();
                 }
 
-            }
 
-        });
+
+        }
+
+
 
 
 
