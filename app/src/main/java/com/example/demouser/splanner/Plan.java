@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Plan
 {
     protected ArrayList<Course> plan;
+
     protected Plan() {
         plan = new ArrayList<>();
     }
