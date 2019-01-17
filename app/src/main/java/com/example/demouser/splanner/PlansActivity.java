@@ -15,7 +15,7 @@ import java.util.List;
 
 public class PlansActivity extends AppCompatActivity {
 
-//    private ArrayList<Plan> myPlanList = new ArrayList<>();
+    //    private ArrayList<Plan> myPlanList = new ArrayList<>();
     private List<Course> plan = new ArrayList<>();
 
     @Override
@@ -38,7 +38,7 @@ public class PlansActivity extends AppCompatActivity {
         }
 
 //        for (Plan plan: myPlanList) {
- //           planAtv.setText(plan.toString());
+        //           planAtv.setText(plan.toString());
 //        }
     }
 

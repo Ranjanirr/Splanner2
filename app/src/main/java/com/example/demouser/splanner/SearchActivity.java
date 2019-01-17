@@ -108,21 +108,16 @@ public class SearchActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ArrayList<Course> selected = new ArrayList<>();
-
-                String str = "You have added:  \n";
+                String str = "You added: \n";
                 for (int i = 0; i < listOfCourses.size(); i++){
                     if (listOfCourses.get(i).isChecked()){
-                        selected.add(listOfCourses.get(i));
+                        if(!isHere(selectedCourse, listOfCourses.get(i))) {
+                            selectedCourse.add(listOfCourses.get(i));
+                        }
                         str += listOfCourses.get(i).getCourseTitle() + "\n";
                     }
                 }
-                selectedCourse.addAll(selected);
-
-                LinkedList result = new LinkedList(new HashSet(selectedCourse));
-                selectedCourse = result;
-
-                Toast.makeText(SearchActivity.this, str, Toast.LENGTH_LONG).show();
+                Toast.makeText(SearchActivity.this, str.trim(), Toast.LENGTH_LONG).show();
 
                 deselectAll.performClick();
             }
@@ -261,5 +256,20 @@ public class SearchActivity extends AppCompatActivity {
 
     public static Context getContext(){
         return myContext;
+    }
+
+    public boolean isHere(List<Course> list, Course course){
+        int count = 0;
+        if (list.size() == 0){
+            return false;
+        }
+
+        while(count < list.size()){
+            if(course.getCourseNumber().equals(list.get(count).getCourseNumber())){
+                return true;
+            }
+            count++;
+        }
+        return false;
     }
 }
