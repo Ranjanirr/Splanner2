@@ -27,7 +27,7 @@ public class SearchActivity extends AppCompatActivity {
     private ListView listView;
     private Button addButton;
     private Button seeList;
-    private Button unselectAll;
+    private Button deselectAll;
 
     private SearchView simpleSearchView; // inititate a search view
 
@@ -47,7 +47,7 @@ public class SearchActivity extends AppCompatActivity {
         listView = (ListView)findViewById(R.id.listview);
         addButton = (Button)findViewById(R.id.addCourse);
         seeList = (Button)findViewById(R.id.seeList);
-        unselectAll = (Button)findViewById(R.id.unselectAll);
+        deselectAll = (Button)findViewById(R.id.deselectAll);
 
         myItemsListAdapter = new ItemsListAdapter(this, listOfCourses);
         listView.setAdapter(myItemsListAdapter);
@@ -114,7 +114,7 @@ public class SearchActivity extends AppCompatActivity {
                 onMyLists();
             }
         });
-        unselectAll.setOnClickListener(new View.OnClickListener() {
+        deselectAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 for (int i=0; i < listOfCourses.size(); i++){
