@@ -3,7 +3,6 @@ package com.example.demouser.splanner;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,10 +17,6 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,30 +24,37 @@ import java.util.List;
 public class SearchActivity extends AppCompatActivity {
 
     // contains CS classes from Spring 2019 data
-    private HashMap<String, Course> courseList = new HashMap<>();
-    public List<Course> courseDisplayList;
     private ItemsListAdapter myItemsListAdapter;
     private ListView listView;
     private Button addButton;
-
+    private Button seeList;
+    private Button unselectAll;
 
     private SearchView simpleSearchView; // inititate a search view
-    private CharSequence query; // get the query string currently in the text field
+
+
+    private static Context myContext;
+    private List<Course> listOfCourses;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        myContext = this;
+        listOfCourses = CoursesData.instance.getCourses();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
         listView = (ListView)findViewById(R.id.listview);
         addButton = (Button)findViewById(R.id.addCourse);
+        seeList = (Button)findViewById(R.id.seeList);
+        unselectAll = (Button)findViewById(R.id.unselectAll);
 
-        initCourseList();
-        myItemsListAdapter = new ItemsListAdapter(this, courseDisplayList);
+        myItemsListAdapter = new ItemsListAdapter(this, listOfCourses);
         listView.setAdapter(myItemsListAdapter);
 
 
-        simpleSearchView = (SearchView) findViewById(R.id.searchView);
+        simpleSearchView = findViewById(R.id.searchView);
         simpleSearchView.setQueryHint("Search for classes");
 
         simpleSearchView.setOnCloseListener(new SearchView.OnCloseListener() {
@@ -97,13 +99,31 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String str = "Check items:\n";
 
-                for (int i=0; i<courseDisplayList.size(); i++){
-                    if (courseDisplayList.get(i).isChecked()){
-                        str += courseDisplayList.get(i).getCourseTitle() + "\n";
+                for (int i=0; i<listOfCourses.size(); i++){
+                    if (listOfCourses.get(i).isChecked()){
+                        str += listOfCourses.get(i).getCourseTitle() + "\n";
                     }
                 }
 
                 Toast.makeText(SearchActivity.this, str, Toast.LENGTH_LONG).show();
+            }
+        });
+
+        seeList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // more codes
+            }
+        });
+        unselectAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i=0; i < listOfCourses.size(); i++){
+                    if (listOfCourses.get(i).isChecked()){
+                        listOfCourses.get(i).setChecked(false);
+                    }
+                }
+                listView.setAdapter(myItemsListAdapter);
             }
         });
     }
@@ -213,30 +233,7 @@ public class SearchActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void initCourseList(){
-        courseDisplayList = new LinkedList<>();
-        // parsing course information and store to a HashMap and LinkedList
-        AssetManager assetManager = getAssets();
-        try {
-            InputStream inputStream = assetManager.open("courses.txt");
-            BufferedReader in  = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-            while((line = in.readLine()) != null){
-                String[] courseInfo = line.split("\\|");
-                Course newCourse = new Course();
-                newCourse.setCourseNumber(courseInfo[0]);
-                newCourse.setCourseTitle(courseInfo[1]);
-                newCourse.setMeetingDays(courseInfo[2]);
-                newCourse.setCourseTime(courseInfo[3]);
-                newCourse.setCredit(courseInfo[4]);
-
-                courseList.put(newCourse.getCourseTitle(), newCourse);
-                courseDisplayList.add(newCourse);
-            }
-
-        } catch (IOException e) {
-            Toast toast = Toast.makeText(this, "Could not load courses", Toast.LENGTH_LONG);
-            toast.show();
-        }
+    public static Context getContext(){
+        return myContext;
     }
 }

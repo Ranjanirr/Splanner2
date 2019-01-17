@@ -22,16 +22,16 @@ public class ListActivity extends AppCompatActivity {
         btnLookup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("List Activity", "Display the course size: " + activity.courseDisplayList.size());
-                String str = "Check items:\n";
+//                Log.i("List Activity", "Display the course size: " + activity.courseDisplayList.size());
+//                String str = "Check items:\n";
+//
+//                for (int i=0; i<activity.courseDisplayList.size(); i++){
+//                    if (activity.courseDisplayList.get(i).isChecked()){
+//                        str += activity.courseDisplayList.get(i).getCourseTitle() + "\n";
+//                    }
+//                }
 
-                for (int i=0; i<activity.courseDisplayList.size(); i++){
-                    if (activity.courseDisplayList.get(i).isChecked()){
-                        str += activity.courseDisplayList.get(i).getCourseTitle() + "\n";
-                    }
-                }
-
-                Toast.makeText(ListActivity.this, str, Toast.LENGTH_LONG).show();
+//                Toast.makeText(ListActivity.this, str, Toast.LENGTH_LONG).show();
             }
         });
     }
