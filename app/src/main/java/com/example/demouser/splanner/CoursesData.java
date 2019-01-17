@@ -16,13 +16,18 @@ import java.util.List;
 public class CoursesData {
 
     // contains CS classes from Spring 2019 data
-    private HashMap<String, Course> courseList = new HashMap<>();
-    public List<Course> courseDisplayList = new LinkedList<>();
-    public List<Course> selectedCourses = new ArrayList<>();
+    private HashMap<String, Course> courseList;
+    public List<Course> courseDisplayList;
+    public List<Course> selectedCourses;
 
     public static final CoursesData instance = new CoursesData(SearchActivity.getContext());
 
     private CoursesData(Context myContext){
+        courseList = new HashMap<>();
+        courseDisplayList = new LinkedList<>();
+        selectedCourses = new ArrayList<>();
+
+
         // parsing course information and store to a HashMap and LinkedList
         AssetManager assetManager = myContext.getAssets();
         try {
@@ -52,7 +57,9 @@ public class CoursesData {
         return courseDisplayList;
     }
 
-    public List<Course> getSelectedCourses() {return selectedCourses;}
+    public List<Course> getSelectedCourses() {
+        return selectedCourses;
+    }
 
     public void addToSelectedCourses(ArrayList<Course> a) { selectedCourses.addAll(a);}
 }

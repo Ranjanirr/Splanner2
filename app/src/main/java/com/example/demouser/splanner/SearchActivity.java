@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,12 +40,17 @@ public class SearchActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search);
+
+
         myContext = this;
         listOfCourses = CoursesData.instance.getCourses();
         selectedCourse = CoursesData.instance.getSelectedCourses();
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+
 
         listView = (ListView)findViewById(R.id.listview);
         addButton = (Button)findViewById(R.id.addCourse);

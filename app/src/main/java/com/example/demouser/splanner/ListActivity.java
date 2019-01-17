@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,9 +39,7 @@ public class ListActivity extends AppCompatActivity {
         selectButton = (Button) findViewById(R.id.selectAll);
         listView = (ListView)findViewById(R.id.listview);
 
-//        myCourseList = new LinkedList<>();
-//        initCourseData();
-        myCourseList = CoursesData.instance.getSelectedCourses();
+        myCourseList = new ArrayList<>();
 
         courseListAdapter = new ItemsListAdapter(this, myCourseList);
         listView.setAdapter(courseListAdapter);
@@ -73,6 +72,8 @@ public class ListActivity extends AppCompatActivity {
 
             }
         });
+
+        myCourseList = CoursesData.instance.getSelectedCourses();
 
         // generate course plan
         generateButton.setOnClickListener(new View.OnClickListener() {
