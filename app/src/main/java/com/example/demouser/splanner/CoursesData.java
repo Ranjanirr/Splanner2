@@ -19,7 +19,6 @@ public class CoursesData {
     private HashMap<String, Course> courseList = new HashMap<>();
     public List<Course> courseDisplayList = new LinkedList<>();
     public List<Course> selectedCourses = new ArrayList<>();
-    public List<Course> coursesInPlan = new ArrayList<>();
 
     public static final CoursesData instance = new CoursesData(SearchActivity.getContext());
 
@@ -55,6 +54,5 @@ public class CoursesData {
 
     public List<Course> getSelectedCourses() {return selectedCourses;}
 
-    public List<Course> getPlan() {return coursesInPlan;}
-
+    public void addToSelectedCourses(ArrayList<Course> a) { selectedCourses.addAll(a);}
 }
