@@ -45,7 +45,6 @@ public class ListActivity extends AppCompatActivity {
 
         myCourseList = new LinkedList<>();
         myCourseList = CoursesData.instance.getSelectedCourses();
-
         plan =  CoursesData.instance.getPlan();
 
         courseListAdapter = new ItemsListAdapter(this, myCourseList);

@@ -17,6 +17,7 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
+    Button myPlansBtn, myListBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button myListBtn = findViewById(R.id.listButton);
+        myListBtn = findViewById(R.id.listButton);
+        myListBtn.setEnabled(false);
         myListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button myPlansBtn = findViewById(R.id.planButton);
+        myPlansBtn = findViewById(R.id.planButton);
+        myPlansBtn.setEnabled(false);
         myPlansBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onSearch() {
         Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
+        myPlansBtn.setEnabled(true);
+        myListBtn.setEnabled(true);
     }
 }
 
