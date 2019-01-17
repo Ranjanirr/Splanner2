@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,6 +18,7 @@ public class CoursesData {
     // contains CS classes from Spring 2019 data
     private HashMap<String, Course> courseList = new HashMap<>();
     public List<Course> courseDisplayList = new LinkedList<>();
+    public List<Course> selectedCourses = new ArrayList<>();
 
     public static final CoursesData instance = new CoursesData(SearchActivity.getContext());
 
@@ -49,4 +51,8 @@ public class CoursesData {
     public List<Course> getCourses(){
         return courseDisplayList;
     }
+
+    public List<Course> getSelectedCourses() {return selectedCourses;}
+
+    public void addToSelectedCourses(ArrayList<Course> a) { selectedCourses.addAll(a);}
 }

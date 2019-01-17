@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,29 +18,31 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
 
-    // contains CS classes from Spring 2019 data
     private ItemsListAdapter myItemsListAdapter;
     private ListView listView;
     private Button addButton;
     private Button seeList;
     private Button unselectAll;
 
-    private SearchView simpleSearchView; // inititate a search view
+    private SearchView simpleSearchView; // initiate a search view
 
 
     private static Context myContext;
+    // contains CS classes from Spring 2019 data
     private List<Course> listOfCourses;
-
+    private List<Course> selectedCourse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         myContext = this;
         listOfCourses = CoursesData.instance.getCourses();
+        selectedCourse = CoursesData.instance.getSelectedCourses();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
@@ -51,7 +54,6 @@ public class SearchActivity extends AppCompatActivity {
 
         myItemsListAdapter = new ItemsListAdapter(this, listOfCourses);
         listView.setAdapter(myItemsListAdapter);
-
 
         simpleSearchView = findViewById(R.id.searchView);
         simpleSearchView.setQueryHint("Search for classes");
@@ -88,23 +90,35 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String str = ((Course)(parent.getItemAtPosition(position))).getCourseTitle() +" " + "is selected";
+//
+//                Log.i("test", "clicked: " + str);
+
                 Toast.makeText(SearchActivity.this,
-                        ((Course)(parent.getItemAtPosition(position))).getCourseTitle(),
+                        ((Course)(parent.getItemAtPosition(position))).getCourseTitle() +" " + "is selected" ,
                         Toast.LENGTH_LONG).show();
             }});
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String str = "Check items:\n";
+                ArrayList<Course> selected = new ArrayList<>();
 
-                for (int i=0; i<listOfCourses.size(); i++){
+                String str = "checked  \n";
+                for (int i = 0; i < listOfCourses.size(); i++){
                     if (listOfCourses.get(i).isChecked()){
+                        selected.add(listOfCourses.get(i));
                         str += listOfCourses.get(i).getCourseTitle() + "\n";
                     }
                 }
+                selectedCourse.addAll(selected);
+
+                Log.i("test", "the selected courses are "+selectedCourse);
+
 
                 Toast.makeText(SearchActivity.this, str, Toast.LENGTH_LONG).show();
+
+                unselectAll.performClick();
             }
         });
 
@@ -117,7 +131,7 @@ public class SearchActivity extends AppCompatActivity {
         unselectAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (int i=0; i < listOfCourses.size(); i++){
+                for (int i = 0; i < listOfCourses.size(); i++){
                     if (listOfCourses.get(i).isChecked()){
                         listOfCourses.get(i).setChecked(false);
                     }
@@ -195,9 +209,16 @@ public class SearchActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     boolean newState = !list.get(position).isChecked();
                     list.get(position).setChecked(newState);
+//                    Toast.makeText(getApplicationContext(),
+//                            itemStr + "setOnClickListener\nchecked: " + newState,
+//                            Toast.LENGTH_LONG).show();
+                    // message for notifying user that the course is selected
                     Toast.makeText(getApplicationContext(),
-                            itemStr + "setOnClickListener\nchecked: " + newState,
+                           itemStr + " is selected ",
                             Toast.LENGTH_LONG).show();
+
+                    // add the selected class to the selected list
+
                 }
             });
 
