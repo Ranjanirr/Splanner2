@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -114,8 +115,8 @@ public class SearchActivity extends AppCompatActivity {
                 }
                 selectedCourse.addAll(selected);
 
-                Log.i("test", "the selected courses are "+selectedCourse);
-
+                LinkedList result = new LinkedList(new HashSet(selectedCourse));
+                selectedCourse = result;
 
                 Toast.makeText(SearchActivity.this, str, Toast.LENGTH_LONG).show();
 
