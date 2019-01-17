@@ -35,6 +35,7 @@ public class SearchActivity extends AppCompatActivity {
     private ItemsListAdapter myItemsListAdapter;
     private ListView listView;
     private Button addButton;
+    private Button seeList;
 
 
     private SearchView simpleSearchView; // inititate a search view
@@ -47,9 +48,9 @@ public class SearchActivity extends AppCompatActivity {
 
         listView = (ListView)findViewById(R.id.listview);
         addButton = (Button)findViewById(R.id.addCourse);
-
+        seeList = (Button)findViewById(R.id.seeList);
         initCourseList();
-        myItemsListAdapter = new ItemsListAdapter(this, courseDisplayList);
+        myItemsListAdapter = new ItemsListAdapter(this, CourseList.instance.getCourses());
         listView.setAdapter(myItemsListAdapter);
 
 
@@ -79,6 +80,7 @@ public class SearchActivity extends AppCompatActivity {
                 Toast.makeText(SearchActivity.this,
                         ((Course)(parent.getItemAtPosition(position))).getCourseTitle(),
                         Toast.LENGTH_LONG).show();
+                CourseList.instance.selectCourse((Course)(parent.getItemAtPosition(position)));
             }});
 
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -86,13 +88,21 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String str = "Check items:\n";
 
-                for (int i=0; i<courseDisplayList.size(); i++){
-                    if (courseDisplayList.get(i).isChecked()){
-                        str += courseDisplayList.get(i).getCourseTitle() + "\n";
+                for (int i=0; i<CourseList.instance.getCourses().size(); i++){
+                    if (CourseList.instance.getCourses().get(i).isChecked()){
+                        str += CourseList.instance.getCourses().get(i).getCourseTitle() + "\n";
                     }
                 }
 
                 Toast.makeText(SearchActivity.this, str, Toast.LENGTH_LONG).show();
+            }
+        });
+        seeList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onMyLists();
+
+
             }
         });
     }
@@ -222,12 +232,17 @@ public class SearchActivity extends AppCompatActivity {
                 newCourse.setCredit(courseInfo[4]);
 
                 courseList.put(newCourse.getCourseTitle(), newCourse);
-                courseDisplayList.add(newCourse);
+                CourseList.instance.addCourse(newCourse);
             }
 
         } catch (IOException e) {
             Toast toast = Toast.makeText(this, "Could not load courses", Toast.LENGTH_LONG);
             toast.show();
         }
+    }
+
+    private void onMyLists() {
+        Intent intent = new Intent(this, ListActivity.class);
+        startActivity(intent);
     }
 }
