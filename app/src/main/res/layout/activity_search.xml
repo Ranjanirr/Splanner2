@@ -83,11 +83,11 @@
                 android:text="Add to my list" />
 
             <Button
-                android:id="@+id/unselectAll"
+                android:id="@+id/deselectAll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="Unselect All" />
+                android:text="Deselect All" />
 
             <Button
                 android:id="@+id/seeList"
