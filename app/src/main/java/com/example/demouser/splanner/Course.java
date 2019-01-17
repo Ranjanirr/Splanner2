@@ -95,12 +95,20 @@ public class Course {
     }
 
     // convert time
+    // fix a bug for 12
     private Integer convertTime(String tempTime, String day) {
-        if (day.equals("AM"))
+        if (day.equals("AM")) {
             return Integer.parseInt(tempTime);
-        else if (day.equals("PM"))
+        }
+        else if (tempTime.compareTo("1300") < 0) {
+            return Integer.parseInt(tempTime);
+        }
+        else if (day.equals("PM")) {
             return Integer.parseInt(tempTime) + 1200;
-        return 0;
+        }
+        else {
+            return 0;
+        }
     }
 
     public void setChecked(boolean b){
@@ -117,5 +125,28 @@ public class Course {
         res += courseNumber + " " + courseTitle + "\n"
                 + meetingDays + " " + meetingTime;
         return res;
+    }
+
+    public boolean isTimeConflict(Course anotherCourse) {
+        if (startTime >= anotherCourse.getStartTime() && endTime <= anotherCourse.getEndTime()
+                || anotherCourse.getStartTime() >= startTime && anotherCourse.getEndTime() <= endTime) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isDateConflict(Course anotherCourse) {
+        if (meetingDays.contains(anotherCourse.getMeetingDays()) ||
+                anotherCourse.getMeetingDays().contains(meetingDays)) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isConflict(Course anotherCourse) {
+        if (isDateConflict(anotherCourse)) {
+            return (isTimeConflict(anotherCourse));
+        }
+        return false;
     }
 }
