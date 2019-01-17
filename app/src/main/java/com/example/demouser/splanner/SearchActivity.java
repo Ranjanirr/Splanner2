@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,14 +56,26 @@ public class SearchActivity extends AppCompatActivity {
         simpleSearchView = (SearchView) findViewById(R.id.searchView);
         simpleSearchView.setQueryHint("Search for classes");
 
+        simpleSearchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                myItemsListAdapter.reset();
+                listView.setAdapter(myItemsListAdapter);
+                return false;
+            }
+        });
+
         simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.i("userinput", query);
-                if(myItemsListAdapter.searchCourse(query) == null){
+                if(myItemsListAdapter.searchCourse(query).size() == 0){
+                    listView.setAdapter(myItemsListAdapter);
                     Toast.makeText(SearchActivity.this, "No result", Toast.LENGTH_LONG).show();
                 }
-                return true;
+                else{
+                    listView.setAdapter(myItemsListAdapter);
+                }
+                return false;
             }
 
             @Override
@@ -186,17 +197,17 @@ public class SearchActivity extends AppCompatActivity {
             return rowView;
         }
 
-        public void updateList(List<Course> l){
-            list = l;
-        }
-
         public List<Course> searchCourse(String keyword){
             int count = 0;
             List<Course> result = new LinkedList<>();
             while(count < database.size()){
-                if(database.get(count).getCourseTitle().contains(keyword)){
-                    result.add(result.get(count));
+                String title = database.get(count).getCourseTitle().toLowerCase();
+                String key = keyword.toLowerCase();
+                String number = database.get(count).getCourseNumber().toLowerCase();
+                if(title.contains(key) || number.contains(key)){
+                    result.add(database.get(count));
                 }
+                count++;
             }
             list = result;
             return result;
@@ -206,8 +217,6 @@ public class SearchActivity extends AppCompatActivity {
             list = database;
         }
     }
-
-
 
     private void onCheckMyLists() {
         Intent intent = new Intent(this, ListActivity.class);
