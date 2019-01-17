@@ -104,7 +104,7 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View view) {
                 ArrayList<Course> selected = new ArrayList<>();
 
-                String str = "checked  \n";
+                String str = "You've added:  \n";
                 for (int i = 0; i < listOfCourses.size(); i++){
                     if (listOfCourses.get(i).isChecked()){
                         selected.add(listOfCourses.get(i));
@@ -118,7 +118,7 @@ public class SearchActivity extends AppCompatActivity {
 
                 Toast.makeText(SearchActivity.this, str, Toast.LENGTH_LONG).show();
 
-                unselectAll.performClick();
+                deselectAll.performClick();
             }
         });
 

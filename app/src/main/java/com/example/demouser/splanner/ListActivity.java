@@ -38,8 +38,9 @@ public class ListActivity extends AppCompatActivity {
         selectButton = (Button) findViewById(R.id.selectAll);
         listView = (ListView)findViewById(R.id.listview);
 
-        myCourseList = new LinkedList<>();
-        initCourseData();
+//        myCourseList = new LinkedList<>();
+//        initCourseData();
+        myCourseList = CoursesData.instance.getSelectedCourses();
 
         courseListAdapter = new ItemsListAdapter(this, myCourseList);
         listView.setAdapter(courseListAdapter);
