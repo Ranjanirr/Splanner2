@@ -97,7 +97,7 @@ public class SearchActivity extends AppCompatActivity {
 //                Log.i("test", "clicked: " + str);
 
                 Toast.makeText(SearchActivity.this,
-                        ((Course)(parent.getItemAtPosition(position))).getCourseTitle() +" " + "is selected" ,
+                        "You selected: \n" + ((Course)(parent.getItemAtPosition(position))).getCourseTitle(),
                         Toast.LENGTH_LONG).show();
             }});
 
@@ -216,7 +216,7 @@ public class SearchActivity extends AppCompatActivity {
 //                            Toast.LENGTH_LONG).show();
                     // message for notifying user that the course is selected
                     Toast.makeText(getApplicationContext(),
-                           itemStr + " is selected ",
+                           "You selected: \n"+itemStr,
                             Toast.LENGTH_LONG).show();
 
                     // add the selected class to the selected list

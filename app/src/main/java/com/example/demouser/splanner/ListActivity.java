@@ -179,7 +179,7 @@ public class ListActivity extends AppCompatActivity {
                     boolean newState = !list.get(position).isChecked();
                     list.get(position).setChecked(newState);
                     Toast.makeText(getApplicationContext(),
-                            itemStr + "setOnClickListener\nchecked: " + newState,
+                            "You selected: \n"+itemStr,
                             Toast.LENGTH_LONG).show();
                 }
             });
