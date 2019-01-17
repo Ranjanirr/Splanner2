@@ -3,10 +3,8 @@ package com.example.demouser.splanner;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,50 +12,80 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
 
     // contains CS classes from Spring 2019 data
-    private HashMap<String, Course> courseList = new HashMap<>();
-    public static List<Course> courseDisplayList;
     private ItemsListAdapter myItemsListAdapter;
     private ListView listView;
-    private Button btnLookup;
+    private Button addButton;
+    private Button seeList;
+    private Button unselectAll;
+
+    private SearchView simpleSearchView; // inititate a search view
+
+
+    private static Context myContext;
+    private List<Course> listOfCourses;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        myContext = this;
+        listOfCourses = CoursesData.instance.getCourses();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-//        Button checkBtn = findViewById(R.id.checkButton);
         listView = (ListView)findViewById(R.id.listview);
-        btnLookup = (Button)findViewById(R.id.lookup);
-//        checkBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onCheckMyLists();
-//            }
-//        });
+        addButton = (Button)findViewById(R.id.addCourse);
+        seeList = (Button)findViewById(R.id.seeList);
+        unselectAll = (Button)findViewById(R.id.unselectAll);
 
-
-        initCourseList();
-
-        myItemsListAdapter = new ItemsListAdapter(this, courseDisplayList);
+        myItemsListAdapter = new ItemsListAdapter(this, listOfCourses);
         listView.setAdapter(myItemsListAdapter);
 
+
+        simpleSearchView = findViewById(R.id.searchView);
+        simpleSearchView.setQueryHint("Search for classes");
+
+        simpleSearchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                myItemsListAdapter.reset();
+                listView.setAdapter(myItemsListAdapter);
+                return false;
+            }
+        });
+
+        simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if(myItemsListAdapter.searchCourse(query).size() == 0){
+                    listView.setAdapter(myItemsListAdapter);
+                    Toast.makeText(SearchActivity.this, "No result", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    listView.setAdapter(myItemsListAdapter);
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(SearchActivity.this,
@@ -65,18 +93,36 @@ public class SearchActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
             }});
 
-        btnLookup.setOnClickListener(new View.OnClickListener() {
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String str = "Check items:\n";
 
-                for (int i=0; i<courseDisplayList.size(); i++){
-                    if (courseDisplayList.get(i).isChecked()){
-                        str += i + "\n";
+                for (int i=0; i<listOfCourses.size(); i++){
+                    if (listOfCourses.get(i).isChecked()){
+                        str += listOfCourses.get(i).getCourseTitle() + "\n";
                     }
                 }
 
                 Toast.makeText(SearchActivity.this, str, Toast.LENGTH_LONG).show();
+            }
+        });
+
+        seeList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onMyLists();
+            }
+        });
+        unselectAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i=0; i < listOfCourses.size(); i++){
+                    if (listOfCourses.get(i).isChecked()){
+                        listOfCourses.get(i).setChecked(false);
+                    }
+                }
+                listView.setAdapter(myItemsListAdapter);
             }
         });
     }
@@ -93,9 +139,11 @@ public class SearchActivity extends AppCompatActivity {
         private Context context;
         private List<Course> list;
 
+        private List<Course> database;
         ItemsListAdapter(Context c, List<Course> l) {
             context = c;
-            list = l;
+            database = l;
+            list = database;
         }
 
         @Override
@@ -137,7 +185,8 @@ public class SearchActivity extends AppCompatActivity {
             viewHolder.checkBox.setChecked(list.get(position).isChecked());
 
             final String itemStr = list.get(position).getCourseTitle();
-            viewHolder.text.setText(itemStr);
+            final String courseNum = list.get(position).getCourseNumber();
+            viewHolder.text.setText(courseNum + "\n" + itemStr);
 
             viewHolder.checkBox.setTag(position);
 
@@ -156,40 +205,34 @@ public class SearchActivity extends AppCompatActivity {
 
             return rowView;
         }
+
+        public List<Course> searchCourse(String keyword){
+            int count = 0;
+            List<Course> result = new LinkedList<>();
+            while(count < database.size()){
+                String title = database.get(count).getCourseTitle().toLowerCase();
+                String key = keyword.toLowerCase();
+                String number = database.get(count).getCourseNumber().toLowerCase();
+                if(title.contains(key) || number.contains(key)){
+                    result.add(database.get(count));
+                }
+                count++;
+            }
+            list = result;
+            return result;
+        }
+
+        public void reset(){
+            list = database;
+        }
     }
 
-
-
-    private void onCheckMyLists() {
+    private void onMyLists() {
         Intent intent = new Intent(this, ListActivity.class);
         startActivity(intent);
     }
 
-    public void initCourseList(){
-        courseDisplayList = new LinkedList<>();
-        // parsing course information and store to a HashMap and LinkedList
-        AssetManager assetManager = getAssets();
-        try {
-            InputStream inputStream = assetManager.open("courses.txt");
-            BufferedReader in  = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-            while((line = in.readLine()) != null){
-                String[] courseInfo = line.split("\\|");
-                Course newCourse = new Course();
-                newCourse.setCourseNumber(courseInfo[0]);
-                newCourse.setCourseTitle(courseInfo[1]);
-                newCourse.setMeetingDays(courseInfo[2]);
-                newCourse.setCourseTime(courseInfo[3]);
-                newCourse.setCredit(courseInfo[4]);
-
-                courseList.put(newCourse.getCourseTitle(), newCourse);
-
-                courseDisplayList.add(newCourse);
-            }
-
-        } catch (IOException e) {
-            Toast toast = Toast.makeText(this, "Could not load courses", Toast.LENGTH_LONG);
-            toast.show();
-        }
+    public static Context getContext(){
+        return myContext;
     }
 }
