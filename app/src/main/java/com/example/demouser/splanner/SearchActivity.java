@@ -34,6 +34,7 @@ public class SearchActivity extends AppCompatActivity {
 
 
     private static Context myContext;
+
     // contains CS classes from Spring 2019 data
     private List<Course> listOfCourses;
     private List<Course> selectedCourse;
@@ -95,8 +96,12 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String str = ((Course)(parent.getItemAtPosition(position))).getCourseTitle() +" " + "is selected";
+//
+//                Log.i("test", "clicked: " + str);
+
                 Toast.makeText(SearchActivity.this,
-                        ((Course)(parent.getItemAtPosition(position))).getCourseTitle() +" " + "is selected" ,
+                        "You selected: \n" + ((Course)(parent.getItemAtPosition(position))).getCourseTitle(),
                         Toast.LENGTH_LONG).show();
             }});
 
@@ -105,10 +110,9 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View view) {
                 ArrayList<Course> selected = new ArrayList<>();
 
-                String str = "You've added:  \n";
+                String str = "You have added:  \n";
                 for (int i = 0; i < listOfCourses.size(); i++){
                     if (listOfCourses.get(i).isChecked()){
-
                         selected.add(listOfCourses.get(i));
                         str += listOfCourses.get(i).getCourseTitle() + "\n";
                     }
@@ -216,10 +220,11 @@ public class SearchActivity extends AppCompatActivity {
 //                            Toast.LENGTH_LONG).show();
                     // message for notifying user that the course is selected
                     Toast.makeText(getApplicationContext(),
-                           itemStr + " is selected ",
+                           "You selected: \n"+itemStr,
                             Toast.LENGTH_LONG).show();
 
                     // add the selected class to the selected list
+
                 }
             });
 
