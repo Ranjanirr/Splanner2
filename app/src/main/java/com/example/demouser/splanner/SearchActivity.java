@@ -17,7 +17,6 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -112,7 +111,7 @@ public class SearchActivity extends AppCompatActivity {
         seeList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // more codes
+                onMyLists();
             }
         });
         unselectAll.setOnClickListener(new View.OnClickListener() {
@@ -228,7 +227,7 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
-    private void onCheckMyLists() {
+    private void onMyLists() {
         Intent intent = new Intent(this, ListActivity.class);
         startActivity(intent);
     }
