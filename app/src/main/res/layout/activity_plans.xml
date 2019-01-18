@@ -46,8 +46,9 @@
         <TextView
             android:id="@+id/plan1Text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="monospace" />
+            android:layout_height="410dp"
+            android:fontFamily="monospace"
+            android:textAlignment="center" />
 
     </LinearLayout>
 
